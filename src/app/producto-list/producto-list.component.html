@@ -1,0 +1,14 @@
+<ion-card *ngFor="let producto of productos" [hidden]="producto.urlImage === undefined">
+  <ion-img [src]="producto.urlImage"></ion-img>
+  <ion-card-header>
+    <ion-card-subtitle>{{producto.descripcion}}</ion-card-subtitle>
+    <ion-card-title>{{producto.precio}}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+
+  </ion-card-content>
+
+  <ion-button expand="full" (click)="editar(producto)">Editar</ion-button>
+
+</ion-card>

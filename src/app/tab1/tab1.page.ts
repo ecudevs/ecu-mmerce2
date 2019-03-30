@@ -7,19 +7,9 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
-  datosFormulario:any = {
-    descripcion: 'Encebollado'
-  };
+  datosFormulario = { descripcion: 'Hello' }
 
-  opciones = [
-    { valor: 'B', texto: 'Bebidas' },
-
-    { valor: 'A', texto: 'Alimento' },
-
-    { valor: 'T', texto: 'Tecnologia' }
-  ]
-
-  cervezas:any = [
+  productos: any = [
     {
       descripcion: 'Cervezas',
       precio: 2,
@@ -49,8 +39,14 @@ export class Tab1Page {
     }
   ]
 
-  agregarProducto() {
-    this.cervezas.push(this.datosFormulario);
-    this.datosFormulario = {};
+  agregarProducto(producto) {
+    
+    this.productos.push(producto);
+    // this.datosFormulario = {};
+  }
+
+  editar(producto){
+    debugger;
+    this.datosFormulario=producto;
   }
 }

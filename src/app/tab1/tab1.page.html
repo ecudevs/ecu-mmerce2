@@ -7,38 +7,8 @@
 </ion-header>
 
 <ion-content>
-  <form>
-    <ion-list>
-      <ion-item>
-        <ion-input  [(ngModel)]="datosFormulario.urlImage" #urlImage="ngModel"
-          placeholder="Url Imagen"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input name="descripcion" [(ngModel)]="datosFormulario.descripcion" #descripcion="ngModel"
-          placeholder="Descripcion"></ion-input>
-      </ion-item>
-      <ion-item><ion-input name="precio" [(ngModel)]="datosFormulario.precio" #precio="ngModel" placeholder="precio"></ion-input>
-      </ion-item>
-      <ion-item><ion-input name="stock" [(ngModel)]="datosFormulario.stock" #stock="ngModel" placeholder="stock"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>Categoria</ion-label>
-        <ion-select name="categoria" [(ngModel)]="datosFormulario.categoria" #categoria="ngModel" placeholder="Select One">
-          <ion-select-option *ngFor="let opcion of opciones" [value]="opcion.valor">{{opcion.texto}}</ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-list></form>
-  <ion-card *ngFor="let cerveza of cervezas" [hidden]="cerveza.urlImage === undefined">
-    <ion-img [src]="cerveza.urlImage"></ion-img>
-    <ion-card-header>
-      <ion-card-subtitle>{{cerveza.descripcion}}</ion-card-subtitle>
-      <ion-card-title>{{cerveza.precio}}</ion-card-title>
-    </ion-card-header>
-
-    <ion-card-content>
-
-    </ion-card-content>
-  </ion-card>
+  <app-producto-form [datosFormulario]="datosFormulario" (guardar)="agregarProducto($event)"></app-producto-form>
+  <app-producto-list [productos]="productos" (_editar)="editar($event)"></app-producto-list>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="agregarProducto()">
       <ion-icon name="add"></ion-icon>
