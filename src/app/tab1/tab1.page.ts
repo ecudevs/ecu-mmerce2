@@ -14,8 +14,8 @@ export class Tab1Page implements OnInit {
 
   productos: any = [];
 
-  constructor(private productoService:ProductoService,
-    public modalController: ModalController){
+  constructor(private productoService: ProductoService,
+    public modalController: ModalController) {
 
   }
 
@@ -23,30 +23,48 @@ export class Tab1Page implements OnInit {
     this.getProductos();
   }
 
-  getProductos(){
-    this.productos = this.productoService.getProductos()
+  getProductos(event?) {
+    this.productoService.getProductos().subscribe(data => {
+      this.productos = data.productos;
+
+      if (event) {
+        event.target.complete();
+      }
+
+    }, error => {
+      if (event) {
+        event.target.complete();
+      }
+      console.log(error);
+    })
   }
 
   agregarProducto(producto) {
-    
-    this.productos.push(producto);
+    if (!producto.id) {
+      this.productos.push(producto);
+      return;
+    }
+
+    let index = this.productos.findIndex(x => x.id === producto.id);
+    this.productos[index] = producto;
+
     // this.datosFormulario = {};
   }
 
-  editar(producto){
-    this.datosFormulario=producto;
+  editar(producto) {
+    this.datosFormulario = producto;
   }
 
-  async presentModal() {
+  async presentModal(producto?) {
     const modal = await this.modalController.create({
       component: ProductoFormComponent,
-      componentProps: { value: 123 }
+      componentProps: { datosFormulario: producto || {} }
     });
-    
+
     await modal.present();
-    
-    modal.onDidDismiss().then(data=>{
+
+    modal.onDidDismiss().then(data => {
       this.agregarProducto(data.data.producto);
-    }).catch(error=>console.log(error));
+    }).catch(error => console.log(error));
   }
 }

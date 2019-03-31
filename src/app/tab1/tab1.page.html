@@ -8,7 +8,12 @@
 
 <ion-content>
   <!-- <app-producto-form [datosFormulario]="datosFormulario" (guardar)="agregarProducto($event)"></app-producto-form> -->
-  <app-producto-list [productos]="productos" (_editar)="editar($event)"></app-producto-list>
+  <ion-refresher slot="fixed" (ionRefresh)="getProductos($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Jala para refrescar" refreshingSpinner="circles"
+      refreshingText="Refrescando">
+    </ion-refresher-content>
+  </ion-refresher>
+  <app-producto-list [productos]="productos" (_editar)="presentModal($event)"></app-producto-list>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="presentModal()">
       <ion-icon name="add"></ion-icon>
