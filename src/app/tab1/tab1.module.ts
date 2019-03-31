@@ -14,6 +14,8 @@ import { ProductoListComponent } from '../producto-list/producto-list.component'
     FormsModule,
     RouterModule.forChild([{ path: '', component: Tab1Page }])
   ],
+  // TODO: explicar, entryComponent para usar componentes por ejemplo en modales
+  entryComponents: [ProductoFormComponent],
   declarations: [Tab1Page, ProductoFormComponent, ProductoListComponent]
 })
 export class Tab1PageModule {}

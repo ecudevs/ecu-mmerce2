@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-producto-form',
@@ -19,14 +20,27 @@ export class ProductoFormComponent implements OnInit {
     { valor: 'T', texto: 'Tecnologia' }
   ]
   
-  constructor() { }
+  constructor(private modalController: ModalController) { }
 
   ngOnInit() {}
 
   guardarProducto(){
     
     this.guardar.next(this.datosFormulario);
+
+    try {
+      this.retornarAModal();
+    } catch(e){
+      console.log(e);
+    }
+
     this.datosFormulario={};
+  }
+
+  retornarAModal(){
+    this.modalController.dismiss({
+      producto: this.datosFormulario
+    })
   }
 
 }
