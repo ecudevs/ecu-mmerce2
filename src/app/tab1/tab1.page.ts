@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductoService } from '../services/producto.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { ProductoFormComponent } from '../producto-form/producto-form.component';
 
 @Component({
@@ -15,7 +15,8 @@ export class Tab1Page implements OnInit {
   productos: any = [];
 
   constructor(private productoService: ProductoService,
-    public modalController: ModalController) {
+    public modalController: ModalController,
+    public alertController: AlertController) {
 
   }
 
@@ -25,6 +26,7 @@ export class Tab1Page implements OnInit {
 
   getProductos(event?) {
     this.productoService.getProductos().subscribe(data => {
+      
       this.productos = data.productos;
 
       if (event) {
@@ -40,13 +42,25 @@ export class Tab1Page implements OnInit {
   }
 
   agregarProducto(producto) {
-    if (!producto.id) {
-      this.productos.push(producto);
+    if (!producto._id) {
+      this.productoService.insertar(producto).subscribe(response=>{
+        if(response.success){
+
+          this.getProductos();
+        } else {
+          this.presentAlert(response.error.message)
+        }
+      }, error=>{
+        console.log(error);
+      });
       return;
     }
 
-    let index = this.productos.findIndex(x => x.id === producto.id);
-    this.productos[index] = producto;
+    this.productoService.modificar(producto).subscribe(response => {
+      this.getProductos();
+    }, error => {
+      console.log(error);
+    });
 
     // this.datosFormulario = {};
   }
@@ -66,5 +80,15 @@ export class Tab1Page implements OnInit {
     modal.onDidDismiss().then(data => {
       this.agregarProducto(data.data.producto);
     }).catch(error => console.log(error));
+  }
+
+  async presentAlert(mensaje) {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      message: mensaje,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 }

@@ -7,6 +7,8 @@ import { Tab1Page } from './tab1.page';
 import { ProductoFormComponent } from '../producto-form/producto-form.component';
 import { ProductoListComponent } from '../producto-list/producto-list.component';
 import { HttpModule } from '@angular/http';
+import { NumeroDirective } from '../_directives/numero.directive';
+import { DecimalesPipe } from '../_pipes/decimales.pipe';
 
 @NgModule({
   imports: [
@@ -18,6 +20,6 @@ import { HttpModule } from '@angular/http';
   ],
   // TODO: explicar, entryComponent para usar componentes por ejemplo en modales
   entryComponents: [ProductoFormComponent],
-  declarations: [Tab1Page, ProductoFormComponent, ProductoListComponent]
+  declarations: [Tab1Page, ProductoFormComponent, ProductoListComponent, NumeroDirective, DecimalesPipe]
 })
 export class Tab1PageModule {}
